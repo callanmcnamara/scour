@@ -3040,7 +3040,8 @@ def scourString(in_string, options=None):
    numBytesSavedInLengths = reducePrecision(doc.documentElement)
 
    # remove default values of attributes
-   numAttrsRemoved += removeDefaultAttributeValues(doc.documentElement, options)
+   if options.default_attributes:
+       numAttrsRemoved += removeDefaultAttributeValues(doc.documentElement, options)
 
    # reduce the length of transformation attributes
    numBytesSavedInTransforms = optimizeTransforms(doc.documentElement, options)
@@ -3127,6 +3128,9 @@ _options_parser.add_option("--disable-style-to-xml",
 _options_parser.add_option("--disable-group-collapsing",
    action="store_false", dest="group_collapse", default=True,
    help="won't collapse <g> elements")
+_options_parser.add_option("--disable-remove-default-attributes",
+   action="store_false", dest="default_attributes", default=True,
+   help="won't remove attributes with default values.")
 _options_parser.add_option("--create-groups",
    action="store_true", dest="group_create", default=False,
    help="create <g> elements for runs of elements with identical attributes")
